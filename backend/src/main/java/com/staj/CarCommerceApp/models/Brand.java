@@ -2,11 +2,12 @@ package com.staj.CarCommerceApp.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "T_Brand")
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Brand {
 
     @Id
@@ -14,6 +15,6 @@ public class Brand {
     @Column(name="id")
     private Long id;
 
-    @Column(name = "name", nullable=false, unique=true)
+    @Column(name = "name", unique=true)
     private String name;
 }
