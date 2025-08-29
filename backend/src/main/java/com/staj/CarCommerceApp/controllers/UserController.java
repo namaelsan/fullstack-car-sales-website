@@ -1,5 +1,6 @@
 package com.staj.CarCommerceApp.controllers;
 
+import com.staj.CarCommerceApp.models.RoleEnum;
 import com.staj.CarCommerceApp.models.User;
 import com.staj.CarCommerceApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

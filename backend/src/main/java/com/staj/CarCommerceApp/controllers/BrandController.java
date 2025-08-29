@@ -4,6 +4,7 @@ package com.staj.CarCommerceApp.controllers;
 
 import com.staj.CarCommerceApp.models.Brand;
 import com.staj.CarCommerceApp.services.BrandService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,9 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Brand> getBrandById(@RequestParam Long id) {
-        Brand brand = brandService.getBrandById(id);
+    @GetMapping("/find-by-id")
+    public ResponseEntity<Brand> getBrandById(@RequestParam("id") String id ) {
+        Brand brand = brandService.getBrandById(Long.parseLong(id));
         if (brand != null) {
             return new ResponseEntity<>(brand, HttpStatus.OK);
         }
