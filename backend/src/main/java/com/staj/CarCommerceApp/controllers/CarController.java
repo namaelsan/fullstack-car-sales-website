@@ -7,12 +7,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/cars")
+@RequestMapping("/api/car")
 public class CarController {
 
     private final CarService carService;
     public CarController(CarService carService) {this.carService = carService;}
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCarById(@RequestParam Long id) {
+        Car car = carService.getCarById(id);
+        if (car != null) {
+            return new ResponseEntity<>(car, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @PostMapping("/")
     public ResponseEntity<Car> createCarSale(@RequestBody Car car) {

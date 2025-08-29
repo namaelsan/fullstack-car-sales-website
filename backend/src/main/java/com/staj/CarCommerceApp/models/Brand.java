@@ -1,13 +1,14 @@
 package com.staj.CarCommerceApp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "T_Brand")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Brand {
 
     @Id
@@ -16,5 +17,6 @@ public class Brand {
     private Long id;
 
     @Column(name = "name", unique=true)
-    private String name;
+    private String bname;
+
 }

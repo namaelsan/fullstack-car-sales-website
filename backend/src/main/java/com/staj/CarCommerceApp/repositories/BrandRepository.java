@@ -4,4 +4,5 @@ import com.staj.CarCommerceApp.models.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BrandRepository extends JpaRepository<Brand, Long> {
+    public Brand findOneByBname(String bname);
 }

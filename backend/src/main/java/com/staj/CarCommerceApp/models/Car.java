@@ -31,7 +31,7 @@ public class Car {
 
 //    Araç sıfır mı?
     @Column(name="is_new", nullable=false)
-    private boolean isNew;
+    private boolean used;
 
     @Column(name="price", nullable=false)
     private BigDecimal price;
@@ -39,5 +39,4 @@ public class Car {
     @Column(name="release_datetime", nullable=false)
     private Timestamp releaseDateTime;
 //    sql timestamp
-
 }
