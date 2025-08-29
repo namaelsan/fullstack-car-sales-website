@@ -1,5 +1,6 @@
 package com.staj.CarCommerceApp.services;
 
+import com.staj.CarCommerceApp.models.Role;
 import com.staj.CarCommerceApp.models.User;
 import com.staj.CarCommerceApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -47,5 +50,10 @@ public class UserService {
             return null;
         }
         return jwtService.generateJWTToken(user.getUsername(),user.getPassword());
+    }
+
+    public List<Role> getUserRolesById (Long userId) {
+        return userRepository.findById(userId).orElse(null)
+                .getRoles();
     }
 }

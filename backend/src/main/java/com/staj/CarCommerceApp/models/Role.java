@@ -26,6 +26,6 @@ public class Role {
     )
     private Set<User> users;
 
-    private RoleEnum role;
+    private RoleEnum ROLE;
 }
 
