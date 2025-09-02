@@ -1,18 +1,20 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarService } from '../car.service';
 import { Car } from '../car.models';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.component';
 
 @Component({
   selector: 'app-listing-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatDialogModule],
   templateUrl: './listing-page.component.html',
   styleUrls: ['./listing-page.component.css']
 })
 export class ListingPageComponent {
 
-  constructor (private carservice: CarService) {}
+  constructor (private carservice: CarService, private dialog: MatDialog) {}
 
   currentPage: number = 1;
   cars: Car[] = [];
@@ -25,6 +27,18 @@ export class ListingPageComponent {
     }
     return total;
   }
+
+  openEditCarDialog(car: Car) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "300px";
+
+    dialogConfig.data = car;
+
+    this.dialog.open(EditCarDialogComponent, dialogConfig);
+}
 
   goToPage(nextPage: number) {
     if (0 < nextPage && nextPage <= this.totalPages)
