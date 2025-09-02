@@ -1,15 +1,11 @@
 package com.staj.CarCommerceApp.controllers;
 
-import com.staj.CarCommerceApp.models.RoleEnum;
 import com.staj.CarCommerceApp.models.User;
 import com.staj.CarCommerceApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -35,5 +31,31 @@ public class UserController {
         }
         return new ResponseEntity<String>(JWTToken, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<User> addUserRole(@RequestParam("userId") Long userId, @RequestParam("roleId") Long roleId) {
+        User user = userService.addUserRole(userId,roleId);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<User> deleteUserById(@PathVariable Long id){
+        if (!userService.deleteUserById(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,11 +1,12 @@
 package com.staj.CarCommerceApp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity(name = "T_Role")
 @NoArgsConstructor
@@ -17,15 +18,10 @@ public class Role {
     @Column(name="id")
     private Long id;
 
-    @Column(name = "role", unique=true)
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
+    @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
+    private List<User> users;
 
-    private RoleEnum ROLE;
+    private String roleName;
 }
 

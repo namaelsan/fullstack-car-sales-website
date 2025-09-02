@@ -47,7 +47,7 @@ public class BrandService {
         return brandRepository.findById(id).orElse(null);
     }
 
-    public List<Brand> getAllBrand() {
+    public List<Brand> getAllBrands() {
         return brandRepository.findAll();
     }
 }

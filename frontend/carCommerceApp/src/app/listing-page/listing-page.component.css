@@ -1,0 +1,42 @@
+.info-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-radius: 8px;
+  }
+  
+  .title-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Başlık yüksekliği */
+    margin-top: 20px; /* Sayfanın üstünden boşluk */
+  }
+  
+  .page-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .center-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Dikeyde ortalama */
+    align-items: center;      /* Yatayda ortalama */
+    padding: 5vh;
+    /* height: 120vh;            Tüm ekran yüksekliği */
+    /* text-align: center; */
+}  
+
+  .page-info-box {
+    align-self: flex-start;    /* Aligns this box to the left within the column */
+    text-align: left;          /* Aligns the text inside the box to the left */
+    /* margin-left: 20px;         Optional: adds spacing from the left edge */
+  }

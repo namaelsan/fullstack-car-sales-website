@@ -1,13 +1,19 @@
 package com.staj.CarCommerceApp.services;
 
+import com.staj.CarCommerceApp.models.Role;
 import com.staj.CarCommerceApp.models.User;
 import com.staj.CarCommerceApp.models.UserPrincipal;
 import com.staj.CarCommerceApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class MyUserDetailService implements UserDetailsService {
@@ -23,5 +29,12 @@ public class MyUserDetailService implements UserDetailsService {
         }
 
         return new UserPrincipal(user);
+    }
+
+    private Set<GrantedAuthority> getAuthorities(Set<Role> roles) {
+        System.out.println("USERROLE BEING SET RN"+ roles.stream().map(Role::getRoleName));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
+                .collect(Collectors.toSet());
     }
 }

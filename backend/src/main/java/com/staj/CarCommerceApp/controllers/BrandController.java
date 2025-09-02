@@ -4,7 +4,6 @@ package com.staj.CarCommerceApp.controllers;
 
 import com.staj.CarCommerceApp.models.Brand;
 import com.staj.CarCommerceApp.services.BrandService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +28,8 @@ public class BrandController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Brand>> getAllBrand() {
-        List<Brand> brands = brandService.getAllBrand();
+    public ResponseEntity<List<Brand>> getAllBrands() {
+        List<Brand> brands = brandService.getAllBrands();
         if (!brands.isEmpty()) {
             return new ResponseEntity<List<Brand>>(brands, HttpStatus.OK);
         }

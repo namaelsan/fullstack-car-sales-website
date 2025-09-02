@@ -33,8 +33,11 @@ public class SecurityConfig {
 
         http.csrf(customizer -> customizer.disable())
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers("/api/register","/api/login").permitAll()
-                    .anyRequest().authenticated()
+//                    .requestMatchers("/api/register","/api/login").permitAll()
+//                    .requestMatchers("/api/admin/**", "/api/user/**").hasRole("ADMIN")
+//                    .requestMatchers("/api/car/**", "/api/brand/**").hasRole("USER")
+//                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
             )
 //            .formLogin(Customizer.withDefaults())
             .httpBasic(Customizer.withDefaults())

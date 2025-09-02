@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/car")
 public class CarController {
@@ -26,10 +28,10 @@ public class CarController {
     public ResponseEntity<Car> createCarSale(@RequestBody Car car) {
         car.setId(null);
         car = carService.createCarSale(car);
-        if (car != null) {
-            return new ResponseEntity<>(car, HttpStatus.CREATED);
+        if (car == null) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(car, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
@@ -43,4 +45,22 @@ public class CarController {
         carService.removeCarSale(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Car>> getPageOfCars(@RequestParam("page") int page) {
+        List<Car> cars = carService.getPageOfCars(page);
+        if (cars == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(cars, HttpStatus.OK);
+    }
+
+//    @GetMapping("/filter")
+//    public ResponseEntity<List<Car>> getPageOfCars(@RequestParam("page") int page) {
+//        List<Car> cars = carService.getPageOfCars(page);
+//        if (cars == null) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(cars, HttpStatus.OK);
+//    }
 }

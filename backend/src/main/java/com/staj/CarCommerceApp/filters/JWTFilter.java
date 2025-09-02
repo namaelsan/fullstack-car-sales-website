@@ -55,11 +55,11 @@ public class JWTFilter extends OncePerRequestFilter {
             if (jwtService.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken newToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                System.out.println("Authorities: " + userDetails.getAuthorities());
                 newToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(newToken); // add the new token to the chain for UsernamePasswordAuthenticationFilter to use
             }
         }
-        System.out.println(request);
         filterChain.doFilter(request, response);
     }
 }

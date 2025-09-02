@@ -1,23 +1,38 @@
 package com.staj.CarCommerceApp.controllers;
 
 import com.staj.CarCommerceApp.models.Role;
+import com.staj.CarCommerceApp.models.User;
+import com.staj.CarCommerceApp.repositories.RoleRepository;
+import com.staj.CarCommerceApp.services.RoleService;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/role")
 public class RoleController {
-    @GetMapping
-    public ResponseEntity<?> getRole(){
+
+    @Autowired
+    private RoleService roleService;
+
+    @PostConstruct
+    public void createRolesTable(){
+        if (roleService.createRolesTable()) {
+            System.out.println("Roles table successfully created!");
+            return;
+        }
+        System.out.println("Roles table could not be created!");
+        return;
     }
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteRole(){
-
-    }
-
-    @PatchMapping
-    public ResponseEntity<?> updateRole(@RequestBody Role role){
-
-    }
+//    @DeleteMapping
+//    public ResponseEntity<?> deleteRole(){
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @PatchMapping
+//    public ResponseEntity<?> updateRole(@RequestBody Role role){
+//        return ResponseEntity.ok().build();
+//    }
 }
