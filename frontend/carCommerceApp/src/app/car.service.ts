@@ -18,7 +18,7 @@ export class CarService {
     }
   
     updateCarSale(car: Car): Observable<Car>{
-      return this.http.patch<Car>(`${this.baseUrl}/${car.id}`, car);
+      return this.http.patch<Car>(`${this.baseUrl}/${car.id}`, car); 
     }
 
     deleteCarSale(id: number): void{

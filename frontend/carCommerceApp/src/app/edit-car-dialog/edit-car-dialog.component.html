@@ -1,28 +1,32 @@
-<h1 mat-dialog-title>Edit</h1>
-<div mat-dialog-content>
-    <p>Edit the car sale info</p>
-    <mat-form-field class="mb-3" appearance="fill">
-        <label>Brand</label>
-        <input matInput [(ngModel)]="car.brand.bname">
-    </mat-form-field>
-    <mat-form-field class="mb-3" appearance="fill">
-        <label>Litre</label>
-        <input matInput [(ngModel)]="car.litre">
-    </mat-form-field>
-    <mat-form-field class="mb-3" appearance="fill">
-        <label>Price</label>
-        <input matInput [(ngModel)]="car.price">
-    </mat-form-field>
-    <mat-form-field class="mb-3" appearance="fill">
-        <label>Release Date</label>
-        <input matInput [(ngModel)]="car.releaseDateTime">
-    </mat-form-field>
-    <mat-form-field class="mb-3" appearance="fill">
-        <label>Specification</label>
-        <input matInput [(ngModel)]="car.specification">
-    </mat-form-field>
+<div class="mb-3 mt-3 ms-3 me-3" style="width: 400px;">
+    <div class="modal-header">
+        <h5 class="modal-title" id="updatePollLabel">Edit Car</h5>
+        <button type="button" class="btn-close" mat-dialog-close="onClose()" aria-label="Close"></button>
+    </div>
+    <mat-dialog-content>
+        <div class="mb-3">
+            <label>Brand</label>
+            <input type="text" class="form-control" [(ngModel)]="car.brand.bname" name="brand" id="carBrandDialog">
+        </div>
+        <div class="mb-3">
+            <label>Brand</label>
+            <input type="text" class="form-control" [(ngModel)]="car.litre" name="brand" id="carBrandDialog">
+        </div>
+        <div class="mb-3">
+            <label>Brand</label>
+            <input type="text" class="form-control" [(ngModel)]="car.price" name="brand" id="carBrandDialog">
+        </div>
+        <div class="mb-3">
+            <label>Brand</label>
+            <input type="text" class="form-control" [(ngModel)]="car.releaseDateTime" name="brand" id="carBrandDialog">
+        </div>
+        <div class="mb-3">
+            <label>Specification</label>
+            <input type="text" class="form-control" [(ngModel)]="car.specification" name="brand" id="carBrandDialog">
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button class="btn btn-secondary me-2" mat-dialog-close="">Close</button>
+        <button mat-button class="btn btn-primary" (click)="onSave()">Save</button>    
+    </mat-dialog-actions>
 </div>
-<mat-dialog-actions class="mb-3 ms-3">
-    <button (click)="save()" cdkFocusInitial type="button" class="btn btn-primary ms-2">Save</button>
-    <button (click)="close()" type="button" class="btn btn-secondary">Close</button>
-</mat-dialog-actions>

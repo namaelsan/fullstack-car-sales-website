@@ -8,13 +8,13 @@ import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.compo
 @Component({
   selector: 'app-listing-page',
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, EditCarDialogComponent],
   templateUrl: './listing-page.component.html',
   styleUrls: ['./listing-page.component.css']
 })
 export class ListingPageComponent {
 
-  constructor (private carservice: CarService, private dialog: MatDialog) {}
+  constructor(private carservice: CarService, public dialog: MatDialog) { }
 
   currentPage: number = 1;
   cars: Car[] = [];
@@ -29,20 +29,28 @@ export class ListingPageComponent {
   }
 
   openEditCarDialog(car: Car) {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "300px";
-
-    dialogConfig.data = car;
-
-    this.dialog.open(EditCarDialogComponent, dialogConfig);
-}
+    let dialogRef = this.dialog.open(EditCarDialogComponent, { data: car });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.carservice.updateCarSale(result).subscribe({
+          next: (data) => {
+            var carNew = this.cars.find(c => c.id === data.id);
+            if (carNew) {
+              carNew = structuredClone(data);
+            }
+          },
+          error: (e) => {
+            console.error("Error updating car", e)
+          }
+        });
+      }
+    }
+    )
+  }
 
   goToPage(nextPage: number) {
     if (0 < nextPage && nextPage <= this.totalPages)
-    this.currentPage = nextPage;
+      this.currentPage = nextPage;
     localStorage.setItem('currentPage', nextPage.toString())
     window.location.reload();
   }
