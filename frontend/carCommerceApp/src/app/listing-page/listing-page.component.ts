@@ -4,6 +4,9 @@ import { CarService } from '../car.service';
 import { Car } from '../car.models';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { Page } from '../page.models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-listing-page',
@@ -18,7 +21,8 @@ export class ListingPageComponent {
 
   currentPage: number = 1;
   cars: Car[] = [];
-  totalPages: number = 2;
+  totalPages: number = 0;
+  totalElements: number = 0;
 
   totalPrice(): number {
     let total: number = 0;
@@ -33,16 +37,26 @@ export class ListingPageComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.carservice.updateCarSale(result).subscribe({
-          next: (data) => {
-            var carNew = this.cars.find(c => c.id === data.id);
-            if (carNew) {
-              carNew = structuredClone(data);
+          next: (updatedCar) => {
+            var oldCar = this.cars.find(c => c.id === updatedCar.id);
+            if (oldCar) {
+              oldCar = updatedCar;
             }
           },
           error: (e) => {
             console.error("Error updating car", e)
           }
         });
+      }
+    }
+    )
+  }
+
+  openDeleteCarDialog() {
+    let dialogRef = this.dialog.open(DeleteDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "yes") {
+        this.carservice.deleteCarSale(result);
       }
     }
     )
@@ -55,10 +69,10 @@ export class ListingPageComponent {
     window.location.reload();
   }
 
-  loadCars(page: number) {
-    this.carservice.getCarSalesByPage(page).subscribe({
+  loadCars(pageNum: number) {
+    this.carservice.getCarSalesByPage(pageNum).subscribe({
       next: (data) => {
-        this.cars = data;
+        this.loadCarsVariables(data);
       }
       ,
       error: (e) => {
@@ -71,5 +85,11 @@ export class ListingPageComponent {
     const savedPage = localStorage.getItem('currentPage');
     this.currentPage = savedPage ? +savedPage : 1;
     this.loadCars(this.currentPage)
+  }
+
+  loadCarsVariables(carPage: Page) {
+    this.cars =  carPage.content;
+    this.totalElements = carPage.totalElements
+    this.totalPages = carPage.totalPages
   }
 }

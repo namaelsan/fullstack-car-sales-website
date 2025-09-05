@@ -1,12 +1,12 @@
 package com.staj.CarCommerceApp.models;
 
+import com.staj.CarCommerceApp.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 //not all methods implemented but they shouldn't be a problem
 public class UserPrincipal implements UserDetails {

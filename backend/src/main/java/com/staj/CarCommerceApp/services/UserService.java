@@ -1,7 +1,7 @@
 package com.staj.CarCommerceApp.services;
 
-import com.staj.CarCommerceApp.models.Role;
-import com.staj.CarCommerceApp.models.User;
+import com.staj.CarCommerceApp.entities.Role;
+import com.staj.CarCommerceApp.entities.User;
 import com.staj.CarCommerceApp.repositories.RoleRepository;
 import com.staj.CarCommerceApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 public class UserService {

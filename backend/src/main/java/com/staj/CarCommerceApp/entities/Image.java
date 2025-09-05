@@ -1,4 +1,4 @@
-package com.staj.CarCommerceApp.models;
+package com.staj.CarCommerceApp.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

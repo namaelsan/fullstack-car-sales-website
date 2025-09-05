@@ -1,12 +1,10 @@
-package com.staj.CarCommerceApp.models;
+package com.staj.CarCommerceApp.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity(name = "T_User")
 @Data

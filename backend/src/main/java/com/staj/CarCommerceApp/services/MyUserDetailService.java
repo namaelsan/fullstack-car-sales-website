@@ -1,7 +1,7 @@
 package com.staj.CarCommerceApp.services;
 
-import com.staj.CarCommerceApp.models.Role;
-import com.staj.CarCommerceApp.models.User;
+import com.staj.CarCommerceApp.entities.Role;
+import com.staj.CarCommerceApp.entities.User;
 import com.staj.CarCommerceApp.models.UserPrincipal;
 import com.staj.CarCommerceApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.staj.CarCommerceApp.models;
+package com.staj.CarCommerceApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

@@ -1,10 +1,11 @@
 package com.staj.CarCommerceApp.services;
 
-import com.staj.CarCommerceApp.models.Brand;
-import com.staj.CarCommerceApp.models.Car;
+import com.staj.CarCommerceApp.entities.Brand;
+import com.staj.CarCommerceApp.entities.Car;
 import com.staj.CarCommerceApp.repositories.CarRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,12 +43,12 @@ public class CarService {
         return carRepository.findById(id).orElse(null);
     }
 
-    public List<Car> getPageOfCars(int page) {
+    public Page<Car> getPageOfCars(int page) {
         int pageSize = 10;
-        Page<Car> carPage = carRepository.findAll(PageRequest.of(page, pageSize));
+        Page<Car> carPage = carRepository.findAll(PageRequest.of(page, pageSize, Sort.by("id").ascending()));
 
         if (carPage.hasContent()) {
-            return carPage.getContent();
+            return carPage;
         }
         return null;
     }

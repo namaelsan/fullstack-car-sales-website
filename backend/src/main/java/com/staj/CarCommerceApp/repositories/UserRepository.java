@@ -1,6 +1,6 @@
 package com.staj.CarCommerceApp.repositories;
 
-import com.staj.CarCommerceApp.models.User;
+import com.staj.CarCommerceApp.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

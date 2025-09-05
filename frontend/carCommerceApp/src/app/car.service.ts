@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from './user.models';
 import { Car } from './car.models';
+import { Page } from './page.models';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class CarService {
       this.http.delete(`${this.baseUrl}/${id}`)
     }
 
-    getCarSalesByPage(page: number): Observable<Car[]> {
-      return this.http.get<Car[]>(`${this.baseUrl}/?page=${page-1}`) //first page is index 0
+    getCarSalesByPage(page: number): Observable<Page> {
+      return this.http.get<Page>(`${this.baseUrl}/?page=${page-1}`) //first page is index 0
     }
 }

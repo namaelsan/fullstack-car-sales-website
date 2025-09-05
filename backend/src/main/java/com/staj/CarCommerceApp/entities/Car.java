@@ -1,4 +1,4 @@
-package com.staj.CarCommerceApp.models;
+package com.staj.CarCommerceApp.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,7 @@ public class Car {
     private Brand brand;
 
 //    Satılma/Kira durumu, uzunluk, yıl, model
-//    Özellik başı 10 char
-    @Column(name="specification", nullable=false, length = 40)
+    @Column(name="specification", nullable=false)
     private String specification;
 
     @Column(name="motor_litre", nullable=false)

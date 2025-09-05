@@ -1,6 +1,6 @@
 package com.staj.CarCommerceApp.repositories;
 
-import com.staj.CarCommerceApp.models.Role;
+import com.staj.CarCommerceApp.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

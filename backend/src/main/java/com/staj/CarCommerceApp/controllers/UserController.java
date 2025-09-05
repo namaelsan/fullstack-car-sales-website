@@ -1,6 +1,6 @@
 package com.staj.CarCommerceApp.controllers;
 
-import com.staj.CarCommerceApp.models.User;
+import com.staj.CarCommerceApp.entities.User;
 import com.staj.CarCommerceApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

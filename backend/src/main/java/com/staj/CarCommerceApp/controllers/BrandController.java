@@ -2,7 +2,7 @@ package com.staj.CarCommerceApp.controllers;
 
 
 
-import com.staj.CarCommerceApp.models.Brand;
+import com.staj.CarCommerceApp.entities.Brand;
 import com.staj.CarCommerceApp.services.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

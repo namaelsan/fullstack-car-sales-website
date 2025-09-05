@@ -1,7 +1,8 @@
 package com.staj.CarCommerceApp.controllers;
 
-import com.staj.CarCommerceApp.models.Car;
+import com.staj.CarCommerceApp.entities.Car;
 import com.staj.CarCommerceApp.services.CarService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,11 +48,12 @@ public class CarController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Car>> getPageOfCars(@RequestParam("page") int page) {
-        List<Car> cars = carService.getPageOfCars(page);
+    public ResponseEntity<Page<Car>> getPageOfCars(@RequestParam("page") int page) {
+        Page<Car> cars = carService.getPageOfCars(page);
         if (cars == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        System.out.println(cars);
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
