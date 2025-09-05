@@ -38,9 +38,9 @@ export class ListingPageComponent {
       if (result) {
         this.carservice.updateCarSale(result).subscribe({
           next: (updatedCar) => {
-            var oldCar = this.cars.find(c => c.id === updatedCar.id);
-            if (oldCar) {
-              oldCar = updatedCar;
+            const index = this.cars.findIndex(c => c.id === updatedCar.id);
+            if (index !== -1) {
+              this.cars[index] = updatedCar;
             }
           },
           error: (e) => {
@@ -48,8 +48,7 @@ export class ListingPageComponent {
           }
         });
       }
-    }
-    )
+    });
   }
 
   openDeleteCarDialog() {
