@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-dialog',
@@ -10,5 +10,16 @@ import { MatDialogModule } from '@angular/material/dialog';
   styleUrls: ['./delete-dialog.component.css']
 })
 export class DeleteDialogComponent {
+
+    constructor (public dialogRef: MatDialogRef<DeleteDialogComponent>) {}
+  
+
+  onYes() {
+    this.dialogRef.close("yes");
+  }
+
+  onNo() {
+    this.dialogRef.close();
+  }
 
 }

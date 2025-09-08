@@ -11,22 +11,28 @@ import { Page } from './page.models';
 export class CarService {
 
   private baseUrl = "/api/car"
-  
-    constructor(private http: HttpClient) {  }
-    
-    createCarSale(car: Car): Observable<Car>{
-      return this.http.post<Car>(`${this.baseUrl}/`, car);
-    }
-  
-    updateCarSale(car: Car): Observable<Car>{
-      return this.http.patch<Car>(`${this.baseUrl}/${car.id}`, car); 
-    }
 
-    deleteCarSale(id: number): void{
-      this.http.delete(`${this.baseUrl}/${id}`)
-    }
+  constructor(private http: HttpClient) { }
 
-    getCarSalesByPage(page: number): Observable<Page> {
-      return this.http.get<Page>(`${this.baseUrl}/?page=${page-1}`) //first page is index 0
-    }
+  createCarSale(car: Car): Observable<Car> {
+    return this.http.post<Car>(`${this.baseUrl}/`, car);
+  }
+
+  updateCarSale(car: Car): Observable<Car> {
+    return this.http.patch<Car>(`${this.baseUrl}/${car.id}`, car);
+  }
+
+  deleteCarSale(id: number): Observable<Object> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  getCarSalesByPage(page: number): Observable<Page> {
+    return this.http.get<Page>(`${this.baseUrl}/`,
+      {
+        params: {
+          "page": page - 1,
+        }
+      }
+    ) //first page is index 0
+  }
 }

@@ -4,9 +4,12 @@
   </div>
 
   <div class="info-box">
-    <h4>Sepet</h4>
-    <h5>Toplam Ürün: {{cars.length}} Adet</h5>
-    <h5>Toplam Tutar: {{totalPrice()}}</h5>
+    <strong>
+      <h4>Sepet</h4>
+    </strong>
+    <h5>Toplam Ürün: {{totalCartElements()}} Adet</h5>
+    <h5>Toplam Tutar: {{totalCartPrice()}}</h5>
+    <button type="button" (click)="clearCart()" class="btn btn-outline-danger mt-2">Clear cart</button>
   </div>
   <div class="container mt-4 p-4 bg-white shadow rounded">
     <div class="mb-3">
@@ -36,13 +39,13 @@
         <div class="d-flex justify-content-between align-items-center w-100">
           <!-- Left-aligned button -->
           <div>
-            <button type="button" class="btn btn-outline-primary">Add to cart</button>
+            <button type="button" (click)="openAddToCartDialog(car)" class="btn btn-outline-primary">Add to cart</button>
           </div>
 
           <!-- Right-aligned buttons -->
           <div>
             <button mat-button (click)="openEditCarDialog(car)" class="btn btn-outline-warning me-2">Edit</button>
-            <button type="button" class="btn btn-outline-danger">Remove</button>
+            <button type="button" (click)="openDeleteCarDialog(car)" class="btn btn-outline-danger">Remove</button>
           </div>
         </div>
       </div>

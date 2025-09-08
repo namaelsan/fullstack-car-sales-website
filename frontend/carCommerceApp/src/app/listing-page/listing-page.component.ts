@@ -1,36 +1,43 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarService } from '../car.service';
 import { Car } from '../car.models';
-import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Page } from '../page.models';
 import { Observable } from 'rxjs';
+import { CartService } from '../cart.service';
+import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
 
 @Component({
   selector: 'app-listing-page',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, EditCarDialogComponent],
+  imports: [CommonModule, MatDialogModule],
   templateUrl: './listing-page.component.html',
   styleUrls: ['./listing-page.component.css']
 })
 export class ListingPageComponent {
 
-  constructor(private carservice: CarService, public dialog: MatDialog) { }
+  constructor(private carservice: CarService, private dialog: MatDialog, public cartService: CartService) { }
 
   currentPage: number = 1;
   cars: Car[] = [];
   totalPages: number = 0;
   totalElements: number = 0;
 
-  totalPrice(): number {
-    let total: number = 0;
-    for (let i = 0; i < this.cars.length; i++) {
-      total += this.cars[i].price;
-    }
-    return total;
+  totalCartPrice(): number {
+    return this.cartService.getTotalPrice();
   }
+
+  totalCartElements(): number {
+    return this.cartService.getTotalElements();
+  }
+
+  clearCart() {
+    this.cartService.clearCart();
+  }
+
 
   openEditCarDialog(car: Car) {
     let dialogRef = this.dialog.open(EditCarDialogComponent, { data: car });
@@ -41,6 +48,7 @@ export class ListingPageComponent {
             const index = this.cars.findIndex(c => c.id === updatedCar.id);
             if (index !== -1) {
               this.cars[index] = updatedCar;
+              this.cartService.updateCart(updatedCar);
             }
           },
           error: (e) => {
@@ -51,11 +59,37 @@ export class ListingPageComponent {
     });
   }
 
-  openDeleteCarDialog() {
+  openDeleteCarDialog(car: Car) {
     let dialogRef = this.dialog.open(DeleteDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result === "yes") {
-        this.carservice.deleteCarSale(result);
+        this.carservice.deleteCarSale(car.id).subscribe({
+          next: (data) => {
+            console.log("Car successfully deleted")
+          }
+          ,
+          error: (e) => {
+            console.error("Error deleting car: ", e)
+          }
+        });
+        const index = this.cars.findIndex(c => c.id === car.id);
+        if (index !== -1) {
+          this.cars.splice(index,1);
+        }
+      }
+    }
+    )
+  }
+
+  openAddToCartDialog(car: Car) {
+    let dialogRef = this.dialog.open(AddToCartDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "yes") {
+        try {
+          this.cartService.addToCart(car);          
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
     )
