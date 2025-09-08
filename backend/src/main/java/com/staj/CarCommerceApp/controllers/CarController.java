@@ -1,6 +1,8 @@
 package com.staj.CarCommerceApp.controllers;
 
 import com.staj.CarCommerceApp.entities.Car;
+import com.staj.CarCommerceApp.models.CarSearchCriteria;
+import com.staj.CarCommerceApp.models.SearchModel;
 import com.staj.CarCommerceApp.services.CarService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -47,22 +49,13 @@ public class CarController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<Page<Car>> getPageOfCars(@RequestParam("page") int page) {
-        Page<Car> cars = carService.getPageOfCars(page);
+    @PutMapping("/")
+    public ResponseEntity<Page<Car>> getPageOfCarsWithFilter(@RequestBody SearchModel<CarSearchCriteria> carRequest) {
+        Page<Car> cars = carService.getPageOfCarsWithFilter(carRequest);
         if (cars == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         System.out.println(cars);
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
-
-//    @GetMapping("/filter")
-//    public ResponseEntity<List<Car>> getPageOfCars(@RequestParam("page") int page) {
-//        List<Car> cars = carService.getPageOfCars(page);
-//        if (cars == null) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(cars, HttpStatus.OK);
-//    }
 }

@@ -8,18 +8,19 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 @Data
 public class CarSearchCriteria {
-    private Brand brand;
+    private String brand;
 
     private String specification;
 
-    private Float litre;
+    private ArrayList<Float> litre;
 
-    private boolean used;
+    private Boolean used;
 
-    private BigDecimal price;
+    private ArrayList<BigDecimal> price;
 
-    private Timestamp releaseDateTime;
+    private ArrayList<Timestamp> releaseDateTime;
 }

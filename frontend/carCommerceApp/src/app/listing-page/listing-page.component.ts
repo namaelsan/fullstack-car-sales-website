@@ -9,6 +9,10 @@ import { Page } from '../page.models';
 import { Observable } from 'rxjs';
 import { CartService } from '../cart.service';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
+import { CarSearchCriteria } from '../car-search-criteria.models';
+import { SearchModel } from '../search-model.models';
+import { SearchRequest } from '../search-request.models';
+import { SearchService } from '../search-service.service';
 
 @Component({
   selector: 'app-listing-page',
@@ -19,15 +23,25 @@ import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dial
 })
 export class ListingPageComponent {
 
-  constructor(private carservice: CarService, private dialog: MatDialog, public cartService: CartService) { }
+  constructor(private carservice: CarService, private dialog: MatDialog, public cartService: CartService, public searchService: SearchService) { }
 
-  currentPage: number = 1;
   cars: Car[] = [];
+  currentPage: number = 1;
   totalPages: number = 0;
   totalElements: number = 0;
+  
 
   totalCartPrice(): number {
-    return this.cartService.getTotalPrice();
+    let total = 0;
+    let cartIds: number[] = this.cartService.getCart();
+    let car;
+    cartIds.forEach((id) => {
+      car = this.getById(id);
+      if (car !== undefined){
+        total += car.price;
+      }
+    })
+    return total;
   }
 
   totalCartElements(): number {
@@ -45,11 +59,7 @@ export class ListingPageComponent {
       if (result) {
         this.carservice.updateCarSale(result).subscribe({
           next: (updatedCar) => {
-            const index = this.cars.findIndex(c => c.id === updatedCar.id);
-            if (index !== -1) {
-              this.cars[index] = updatedCar;
-              this.cartService.updateCart(updatedCar);
-            }
+            this.ngOnInit();
           },
           error: (e) => {
             console.error("Error updating car", e)
@@ -66,27 +76,24 @@ export class ListingPageComponent {
         this.carservice.deleteCarSale(car.id).subscribe({
           next: (data) => {
             console.log("Car successfully deleted")
+            this.ngOnInit();
           }
           ,
           error: (e) => {
             console.error("Error deleting car: ", e)
           }
         });
-        const index = this.cars.findIndex(c => c.id === car.id);
-        if (index !== -1) {
-          this.cars.splice(index,1);
-        }
       }
     }
     )
   }
 
-  openAddToCartDialog(car: Car) {
+  openAddToCartDialog(id: number) {
     let dialogRef = this.dialog.open(AddToCartDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result === "yes") {
         try {
-          this.cartService.addToCart(car);          
+          this.cartService.addToCart(id);
         } catch (error) {
           console.log(error)
         }
@@ -103,7 +110,7 @@ export class ListingPageComponent {
   }
 
   loadCars(pageNum: number) {
-    this.carservice.getCarSalesByPage(pageNum).subscribe({
+    this.searchService.searchCars().subscribe({
       next: (data) => {
         this.loadCarsVariables(data);
       }
@@ -121,8 +128,14 @@ export class ListingPageComponent {
   }
 
   loadCarsVariables(carPage: Page) {
-    this.cars =  carPage.content;
-    this.totalElements = carPage.totalElements
-    this.totalPages = carPage.totalPages
+    this.cars = carPage.content;
+    this.totalElements = carPage.totalElements;
+    this.totalPages = carPage.totalPages;
+  }
+
+  getById(id: number): Car | undefined {
+    return this.cars.find((c) => {
+        return c.id === id
+    })
   }
 }

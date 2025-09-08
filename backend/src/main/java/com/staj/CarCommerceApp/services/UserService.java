@@ -4,6 +4,7 @@ import com.staj.CarCommerceApp.entities.Role;
 import com.staj.CarCommerceApp.entities.User;
 import com.staj.CarCommerceApp.repositories.RoleRepository;
 import com.staj.CarCommerceApp.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,21 +15,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JWTService jwtService;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    JWTService jwtService;
-
-    private BCryptPasswordEncoder encoder= UserRepository.encoder;
+    private final BCryptPasswordEncoder encoder= UserRepository.encoder;
 
 
     public User registerUser(User user) {

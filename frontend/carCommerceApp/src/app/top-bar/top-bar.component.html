@@ -1,27 +1,33 @@
 <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded mb-4">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-dark" href="#">CarList</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Listings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Logout
-            </a>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-dark ms-3" href="#">CarList</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Centered Search Bar -->
+      <form class="mx-auto w-50" (ngSubmit)="search()">
+        <input class="form-control" type="search" placeholder="Search cars..." aria-label="Search"
+        [(ngModel)]="searchQuery" name="search" />
+      </form>
+
+      <!-- Navigation Links -->
+      <ul class="navbar-nav me-3">
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Listings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Logout</a>
+        </li>
+      </ul>
     </div>
-  </nav>
-  
+  </div>
+</nav>

@@ -2,6 +2,7 @@ package com.staj.CarCommerceApp.services;
 
 import com.staj.CarCommerceApp.entities.Brand;
 import com.staj.CarCommerceApp.repositories.BrandRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BrandService {
 
-    @Autowired
-    private BrandRepository brandRepository;
+    private final BrandRepository brandRepository;
 
 
     public Brand findBrandById(Long id) {

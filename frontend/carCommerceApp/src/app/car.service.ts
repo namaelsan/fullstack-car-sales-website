@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { User } from './user.models';
 import { Car } from './car.models';
 import { Page } from './page.models';
+import { SearchModel } from './search-model.models';
+import { CarSearchCriteria } from './car-search-criteria.models';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +28,7 @@ export class CarService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  getCarSalesByPage(page: number): Observable<Page> {
-    return this.http.get<Page>(`${this.baseUrl}/`,
-      {
-        params: {
-          "page": page - 1,
-        }
-      }
-    ) //first page is index 0
+  getPageOfCarsWithFilter(carRequest: SearchModel<CarSearchCriteria>): Observable<Page> {
+    return this.http.put<Page>(`${this.baseUrl}/`, carRequest);
   }
 }

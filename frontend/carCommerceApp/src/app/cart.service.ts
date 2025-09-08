@@ -7,32 +7,32 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CartService {
   private readonly CART_KEY = "user_cart";
-  private cartSubject = new BehaviorSubject<Car[]>(this.loadCart());
+  private cartSubject = new BehaviorSubject<number[]>(this.loadCart());
 
     private loadCart() {
       const data = localStorage.getItem(this.CART_KEY);
       return data ? JSON.parse(data): [];
     }
 
-    private saveCart(cart: Car[]) {
+    private saveCart(cart: number[]) {
       localStorage.setItem(this.CART_KEY, JSON.stringify(cart));
     }
 
-    addToCart(car: Car) {
+    addToCart(id: number) {
       let updatedCart = this.cartSubject.getValue();
-      let index = updatedCart.findIndex(c => c.id === car.id);
+      let index = updatedCart.findIndex(i => i === id);
       if (index !== -1) {
         throw("Car already exists inside the cart")
       }
 
-      updatedCart.push(car);
+      updatedCart.push(id);
       this.cartSubject.next(updatedCart);
       this.saveCart(updatedCart);
     }
 
     removeFromCart(id: number) {
       let updatedCart = this.cartSubject.getValue();
-      let index = updatedCart.findIndex(c => c.id === id);
+      let index = updatedCart.findIndex(i => i === id);
       if (index == -1) {
         console.error("Car couldnt be found in cart")
       }
@@ -42,14 +42,14 @@ export class CartService {
       this.saveCart(updatedCart);
     }
 
-    updateCart(car: Car) {
+    updateCart(id: number) {
       let updatedCart = this.cartSubject.getValue();
-      let index = updatedCart.findIndex(c => c.id === car.id);
+      let index = updatedCart.findIndex(i => i === id);
       if (index == -1) {
         console.error("Car couldnt be found in cart")
         return
       }
-      updatedCart[index] = car;
+      updatedCart[index] = id;
 
       this.cartSubject.next(updatedCart);
       this.saveCart(updatedCart);
@@ -61,10 +61,10 @@ export class CartService {
 
     getTotalPrice(): number {
       let total: number = 0;
-      let cart = this.cartSubject.getValue();
-      cart.forEach((c) => {
-        total += c.price;
-      })
+      // let cart = this.cartSubject.getValue();
+      // cart.forEach((c) => {
+      //   total += c.price;
+      // })
       return total
     }
 

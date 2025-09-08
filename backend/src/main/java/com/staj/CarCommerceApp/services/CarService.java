@@ -2,7 +2,12 @@ package com.staj.CarCommerceApp.services;
 
 import com.staj.CarCommerceApp.entities.Brand;
 import com.staj.CarCommerceApp.entities.Car;
+import com.staj.CarCommerceApp.models.CarPage;
+import com.staj.CarCommerceApp.models.CarSearchCriteria;
+import com.staj.CarCommerceApp.models.SearchModel;
+import com.staj.CarCommerceApp.repositories.CarCriteriaRepository;
 import com.staj.CarCommerceApp.repositories.CarRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,11 +17,11 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class CarService {
-    private CarRepository carRepository;
-    private BrandService brandService;
-
-    public CarService(CarRepository carRepository, BrandService brandService) {this.carRepository = carRepository; this.brandService = brandService;}
+    private final CarRepository carRepository;
+    private final BrandService brandService;
+    private final CarCriteriaRepository carCriteriaRepository;
 
     public Car createCarSale(Car car) {
         Long brandId = car.getBrand().getId();
@@ -43,9 +48,8 @@ public class CarService {
         return carRepository.findById(id).orElse(null);
     }
 
-    public Page<Car> getPageOfCars(int page) {
-        int pageSize = 10;
-        Page<Car> carPage = carRepository.findAll(PageRequest.of(page, pageSize, Sort.by("id").ascending()));
+    public Page<Car> getPageOfCarsWithFilter(SearchModel<CarSearchCriteria> searchModel) {
+        Page<Car> carPage = carCriteriaRepository.findAllWithFilters(searchModel);
 
         if (carPage.hasContent()) {
             return carPage;

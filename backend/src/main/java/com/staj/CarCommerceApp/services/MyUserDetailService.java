@@ -4,6 +4,7 @@ import com.staj.CarCommerceApp.entities.Role;
 import com.staj.CarCommerceApp.entities.User;
 import com.staj.CarCommerceApp.models.UserPrincipal;
 import com.staj.CarCommerceApp.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,10 +17,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MyUserDetailService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
