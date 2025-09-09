@@ -28,7 +28,7 @@ export class CarService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  getPageOfCarsWithFilter(carRequest: SearchModel<CarSearchCriteria>): Observable<Page> {
-    return this.http.put<Page>(`${this.baseUrl}/`, carRequest);
+  getPageOfCarsWithFilter(carRequest: SearchModel<CarSearchCriteria>): Observable<Page<Car>> {
+    return this.http.put<Page<Car>>(`${this.baseUrl}/`, carRequest);
   }
 }

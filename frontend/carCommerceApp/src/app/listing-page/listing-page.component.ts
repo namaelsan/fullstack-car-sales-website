@@ -13,35 +13,29 @@ import { CarSearchCriteria } from '../car-search-criteria.models';
 import { SearchModel } from '../search-model.models';
 import { SearchRequest } from '../search-request.models';
 import { SearchService } from '../search-service.service';
+import { TopBarComponent } from "../top-bar/top-bar.component";
+import { CarDataService } from '../car-data-service.service';
 
 @Component({
   selector: 'app-listing-page',
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, TopBarComponent],
   templateUrl: './listing-page.component.html',
   styleUrls: ['./listing-page.component.css']
 })
 export class ListingPageComponent {
 
-  constructor(private carservice: CarService, private dialog: MatDialog, public cartService: CartService, public searchService: SearchService) { }
+  constructor(private carservice: CarService, private dialog: MatDialog, public cartService: CartService, public searchService: SearchService, private carDataService: CarDataService) { }
 
   cars: Car[] = [];
   currentPage: number = 1;
   totalPages: number = 0;
   totalElements: number = 0;
+  freshPage: boolean = true;
   
 
   totalCartPrice(): number {
-    let total = 0;
-    let cartIds: number[] = this.cartService.getCart();
-    let car;
-    cartIds.forEach((id) => {
-      car = this.getById(id);
-      if (car !== undefined){
-        total += car.price;
-      }
-    })
-    return total;
+    return this.cartService.getTotalPrice();
   }
 
   totalCartElements(): number {
@@ -109,6 +103,11 @@ export class ListingPageComponent {
     window.location.reload();
   }
 
+  ngOnInit() {
+    this.loadPageIndex();
+    this.loadCars(this.currentPage)
+  }
+
   loadCars(pageNum: number) {
     this.searchService.searchCars().subscribe({
       next: (data) => {
@@ -121,21 +120,17 @@ export class ListingPageComponent {
     })
   }
 
-  ngOnInit() {
+  loadCarsVariables(carPage: Page<Car>) {
+    this.carDataService.setCarsPage(carPage);
+    this.carDataService.carsPage$.subscribe(page => {
+      this.cars = page.content;
+      this.totalPages = page.totalPages;
+      this.totalElements = page.totalElements;
+    })
+  }
+
+  loadPageIndex() {
     const savedPage = localStorage.getItem('currentPage');
     this.currentPage = savedPage ? +savedPage : 1;
-    this.loadCars(this.currentPage)
-  }
-
-  loadCarsVariables(carPage: Page) {
-    this.cars = carPage.content;
-    this.totalElements = carPage.totalElements;
-    this.totalPages = carPage.totalPages;
-  }
-
-  getById(id: number): Car | undefined {
-    return this.cars.find((c) => {
-        return c.id === id
-    })
   }
 }

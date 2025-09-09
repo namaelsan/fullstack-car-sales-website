@@ -51,7 +51,6 @@ public class CarCriteriaRepository {
     }
 
 
-    //TODO: ADD FILTERS FOR ALL VARIABLES
     private Predicate getPredicate(CarSearchCriteria carSearchCriteria, Root<Car> root) {
         List<Predicate> predicates = new ArrayList<>();
         if (Objects.nonNull(carSearchCriteria.getBrand())) {

@@ -10,7 +10,27 @@
       <form class="mx-auto w-75" (ngSubmit)="search()">
         <div class="input-group">
           <input class="form-control" type="search" placeholder="Search by specifications..." aria-label="Search"
-            [(ngModel)]="searchModel.model.brand" name="make" />
+            [(ngModel)]="specification" name="specification" />
+            <mat-form-field appearance="outline" class="w-25 me-2">
+              <mat-label>Sort By</mat-label>
+              <mat-select [(ngModel)]="sortBy" name="sortBy">
+                <mat-option value="id">Id</mat-option>
+                <mat-option value="brand">Brand</mat-option>
+                <mat-option value="price">Price</mat-option>
+                <mat-option value="litre">Litre</mat-option>
+                <mat-option value="used">Condition</mat-option>
+                <mat-option value="releaseDateTime">Date</mat-option>
+                <mat-option value="specification">Specifications</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-25">
+              <mat-label>Direction</mat-label>
+              <mat-select [(ngModel)]="sortDir" name="sortOrder">
+                <mat-option value="ASC">Ascending</mat-option>
+                <mat-option value="DESC">Descending</mat-option>
+              </mat-select>
+            </mat-form-field>
           <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
             <i class="fas fa-filter"></i> Filters
           </button>
@@ -23,8 +43,8 @@
               <div class="col-sm-6">
                 <mat-form-field class="w-100" appearance="outline">
                   <mat-label>Brand</mat-label>
-                  <mat-select [(ngModel)]="searchModel.model.brand" name="brand">
-                    <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                  <mat-select [(ngModel)]="selectedBrand" name="brand">
+                    <mat-option *ngFor="let brand of brands" [value]="brand.bname">
                       {{ brand.bname }}
                     </mat-option>
                   </mat-select>
@@ -60,8 +80,8 @@
               <div class="col-sm-6">
                 <mat-radio-group [(ngModel)]="used" name="condition" class="d-flex flex-column" color="primary">
                   <mat-label class="mb-2">Condition</mat-label>
-                  <mat-radio-button value="new" class="me-3">New</mat-radio-button>
-                  <mat-radio-button value="used">Used</mat-radio-button>
+                  <mat-radio-button [value]="false" class="me-3">New</mat-radio-button>
+                  <mat-radio-button [value]="true">Used</mat-radio-button>
                 </mat-radio-group>
               </div>
 
@@ -85,13 +105,13 @@
           <a class="nav-link text-dark" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="#">Listings</a>
+          <a class="nav-link text-dark" href="">Listings</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="#">Logout</a>
+          <a class="nav-link text-dark" [href]="loggedIn ? '/logout':'/login' ">{{loggedIn ? "Logout" : "Login"}}</a>
         </li>
       </ul>
     </div>

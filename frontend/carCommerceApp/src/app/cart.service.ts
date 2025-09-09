@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Car } from './car.models';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { CarDataService } from './car-data-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+
+  constructor (private carDataService: CarDataService) {}
+
   private readonly CART_KEY = "user_cart";
   private cartSubject = new BehaviorSubject<number[]>(this.loadCart());
 
@@ -60,12 +64,16 @@ export class CartService {
     }
 
     getTotalPrice(): number {
-      let total: number = 0;
-      // let cart = this.cartSubject.getValue();
-      // cart.forEach((c) => {
-      //   total += c.price;
-      // })
-      return total
+      let total = 0;
+      let cartIds: number[] = this.getCart();
+      let car;
+      cartIds.forEach((id) => {
+        car = this.carDataService.getCarById(id);
+        if (car !== undefined){
+          total += car.price;
+        }
+      })
+      return total;
     }
 
     getTotalElements(): number {

@@ -1,8 +1,8 @@
 export interface User {
-    id: number;
-    username: string;
-    password: string;
-    roles: Role [];
+    id?: number;
+    username?: string;
+    password?: string;
+    roles?: Role [];
 }
 
 export interface Role {

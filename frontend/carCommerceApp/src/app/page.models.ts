@@ -1,6 +1,6 @@
 
-export interface Page {
-    content: any[];
+export interface Page<T> {
+    content: T[];
     totalElements: number;
     totalPages: number;
     empty: boolean;
