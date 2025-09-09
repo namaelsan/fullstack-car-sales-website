@@ -7,13 +7,79 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarContent">
-      <!-- Centered Search Bar -->
-      <form class="mx-auto w-50" (ngSubmit)="search()">
-        <input class="form-control" type="search" placeholder="Search cars..." aria-label="Search"
-        [(ngModel)]="searchQuery" name="search" />
-      </form>
+      <form class="mx-auto w-75" (ngSubmit)="search()">
+        <div class="input-group">
+          <input class="form-control" type="search" placeholder="Search by specifications..." aria-label="Search"
+            [(ngModel)]="searchModel.model.brand" name="make" />
+          <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
+            <i class="fas fa-filter"></i> Filters
+          </button>
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
 
-      <!-- Navigation Links -->
+        <div class="collapse" id="advancedSearch">
+          <div class="card card-body mt-2">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Brand</mat-label>
+                  <mat-select [(ngModel)]="searchModel.model.brand" name="brand">
+                    <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                      {{ brand.bname }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center">
+                  <mat-form-field class="me-2" appearance="outline">
+                    <mat-label>Min Price</mat-label>
+                    <input matInput type="number" [(ngModel)]="minPrice" name="minPrice">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Max Price</mat-label>
+                    <input matInput type="number" [(ngModel)]="maxPrice" name="maxPrice">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center">
+                  <mat-form-field class="me-2" appearance="outline">
+                    <mat-label>Min Litre</mat-label>
+                    <input matInput type="number" [(ngModel)]="minLitre" name="minLitre">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Max Litre</mat-label>
+                    <input matInput type="number" [(ngModel)]="maxLitre" name="maxLitre">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <mat-radio-group [(ngModel)]="used" name="condition" class="d-flex flex-column" color="primary">
+                  <mat-label class="mb-2">Condition</mat-label>
+                  <mat-radio-button value="new" class="me-3">New</mat-radio-button>
+                  <mat-radio-button value="used">Used</mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate [(ngModel)]="startDate" name="startDate">
+                    <input matEndDate [(ngModel)]="endDate" name="endDate">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
       <ul class="navbar-nav me-3">
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Home</a>
