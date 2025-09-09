@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { CarSearchCriteria } from './car-search-criteria.models';
 import { SearchRequest } from './search-request.models';
 import { SearchModel } from './search-model.models';
+import { Page } from './page.models';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
@@ -19,26 +21,26 @@ export class SearchService {
       sortName: "id"
     },
     model: {
-      brand: "",
-      specification: "",
-      litre: [0,1000],
-      used: true,
-      price: [0,1000],
-      releaseDateTime: [new Date('2024-09-08T12:35:12.920+00:00'),new Date('2026-09-08T12:35:12.920+00:00')]
+      // brand: "",
+      // specification: "",
+      // litre: [0,1000],
+      // used: true,
+      // price: [0,1000],
+      // releaseDateTime: [new Date('2024-09-08T12:35:12.920+00:00'),new Date('2026-09-08T12:35:12.920+00:00')]
     }
   }
 
-  searchCars(searchModel?: SearchModel<CarSearchCriteria>) {
+  searchCars(searchModel?: SearchModel<CarSearchCriteria>): Observable<Page> {
 
     let request;
     if (!searchModel){
-    const savedPage = localStorage.getItem('currentPage');
-      this.defaultModel.searchRequest.pageIndex = savedPage savedPage : 1;
+      const savedPage = localStorage.getItem('currentPage');
+      this.defaultModel.searchRequest.pageIndex = (savedPage ? +savedPage : 1) -1;
       request = this.defaultModel;
     } else {
       request = searchModel;
     }
 
-    return this.http.post(`${this.baseUrl}/`, request);
+    return this.http.put<Page>(`${this.baseUrl}/`, request);
   }
 }

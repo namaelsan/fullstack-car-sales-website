@@ -5,7 +5,7 @@
     </div>
     <mat-dialog-content>
         <div class="mb-3">
-            <label>Brand{{car.id}}</label>
+            <label>Brand</label>
             <input type="text" class="form-control" [(ngModel)]="car.brand.bname" name="brand" id="carBrandDialog">
         </div>
         <div class="mb-3">
@@ -17,8 +17,23 @@
             <input type="text" class="form-control" [(ngModel)]="car.price" name="brand" id="carBrandDialog">
         </div>
         <div class="mb-3">
-            <label>Release Date-Time</label>
-            <input type="text" class="form-control" [(ngModel)]="car.releaseDateTime" name="brand" id="carBrandDialog">
+            <label>Used</label>
+            <mat-radio-group [(ngModel)]="car.used">
+                <mat-radio-button color="primary" [value]="true" [checked]="car.used === true">True</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false"
+                    [checked]="car.used === false">False</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="mb-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="car.releaseDateTime">
+                <mat-hint>MM/DD/YY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              
+              
         </div>
         <div class="mb-3">
             <label>Specification</label>
@@ -27,6 +42,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button class="btn btn-secondary me-2" mat-dialog-close="">Close</button>
-        <button mat-button class="btn btn-primary" (click)="onSave()">Save</button>    
+        <button mat-button class="btn btn-primary" (click)="onSave()">Save</button>
     </mat-dialog-actions>
 </div>

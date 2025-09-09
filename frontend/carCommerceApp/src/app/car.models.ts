@@ -5,6 +5,7 @@ export interface Car {
     litre: number;
     price: number;
     releaseDateTime: Date;
+    used: boolean;
 }
 
 export interface Brand {
