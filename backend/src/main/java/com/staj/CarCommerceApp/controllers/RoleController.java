@@ -12,15 +12,15 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @PostConstruct
-    public void createRolesTable(){
-        if (roleService.createRolesTable()) {
-            System.out.println("Roles table successfully created!");
-            return;
-        }
-        System.out.println("Roles table could not be created!");
-        return;
-    }
+//    @PostConstruct
+//    public void createRolesTable(){
+//        if (roleService.createRolesTable()) {
+//            System.out.println("Roles table successfully created!");
+//            return;
+//        }
+//        System.out.println("Roles table could not be created!");
+//        return;
+//    }
 //    @DeleteMapping
 //    public ResponseEntity<?> deleteRole(){
 //        return ResponseEntity.ok().build();

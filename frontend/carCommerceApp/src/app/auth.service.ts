@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from './user.models';
+import { JWTToken } from './jwttoken.models';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +10,13 @@ import { User } from './user.models';
 export class AuthService {
   private baseUrl = '/api'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(user: User) {
-    return this.http.post<string>(`${this.baseUrl}/login`, user).subscribe({
-        next: (token) => {
-          localStorage.setItem('JWT_TOKEN', token)
+    return this.http.post<JWTToken>(`${this.baseUrl}/login`, user).subscribe({
+        next: (data) => {
+          localStorage.setItem('JWT_TOKEN', data.token)
+          this.router.navigate(['']);
         },
         error: (e) => {
           console.error("Error updating car", e)
@@ -44,6 +47,7 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('JWT_TOKEN');
+    this.router.navigate(['']);
   }
 
   getUsername(): String {

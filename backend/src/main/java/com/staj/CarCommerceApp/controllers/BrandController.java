@@ -4,6 +4,8 @@ package com.staj.CarCommerceApp.controllers;
 
 import com.staj.CarCommerceApp.entities.Brand;
 import com.staj.CarCommerceApp.services.BrandService;
+import com.staj.CarCommerceApp.services.LoggingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/brand")
+@RequiredArgsConstructor
 public class BrandController {
 
-    @Autowired
-    private BrandService brandService;
+    private final BrandService brandService;
+    private final LoggingService loggingService;
 
     @GetMapping("/find-by-id")
     public ResponseEntity<Brand> getBrandById(@RequestParam("id") String id ) {
@@ -24,6 +27,7 @@ public class BrandController {
         if (brand != null) {
             return new ResponseEntity<>(brand, HttpStatus.OK);
         }
+        loggingService.logInfo("Brand not found");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -33,6 +37,7 @@ public class BrandController {
         if (!brands.isEmpty()) {
             return new ResponseEntity<List<Brand>>(brands, HttpStatus.OK);
         }
+        loggingService.logInfo("Brands not found");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -41,6 +46,7 @@ public class BrandController {
         brand = brandService.createBrand(brand);
 
         if(brand == null){
+            loggingService.logError("Brandname already exists");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
@@ -51,6 +57,7 @@ public class BrandController {
     public ResponseEntity<Brand> updateBrand(@RequestBody Brand brand, @PathVariable Long id) {
         brand = brandService.updateBrand(brand, id);
         if(brand == null){
+            loggingService.logError("Brandname already exists");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
@@ -59,8 +66,14 @@ public class BrandController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
-        brandService.removeBrand(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            brandService.removeBrand(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e) {
+            loggingService.logError("Brand doesnt exists");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

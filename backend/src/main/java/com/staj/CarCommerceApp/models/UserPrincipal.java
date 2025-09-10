@@ -1,12 +1,14 @@
 package com.staj.CarCommerceApp.models;
 
 import com.staj.CarCommerceApp.entities.User;
+import com.staj.CarCommerceApp.services.MyUserDetailService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 //not all methods implemented but they shouldn't be a problem
 public class UserPrincipal implements UserDetails {
@@ -17,7 +19,9 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
+                .collect(Collectors.toSet());
     }
 
     @Override

@@ -31,13 +31,13 @@ export class TopBarComponent implements OnInit {
   maxPrice: number = 0;
   minPrice: number = 0;
   brands: Brand[] = [];
-  used: boolean = true;
+  used?: boolean = true;
   startDate: Date = new Date();
   endDate: Date = new Date();
   minLitre: number = 0;
   maxLitre: number = 0;
-  selectedBrand: string = "";
-  specification: string = "";
+  selectedBrand?: string = "";
+  specification?: string = "";
   sortBy: string = "id";
   sortDir: SortDirection = SortDirection.ASC;
   private carSearchCriteria: CarSearchCriteria = {};
@@ -101,17 +101,30 @@ export class TopBarComponent implements OnInit {
   }
 
   submitVariables() {
+
+    if(this.maxLitre - this.minLitre !== 0) {
+      this.carSearchCriteria.litre = [this.minLitre, this.maxLitre];
+    }
+    if (this.maxPrice - this.minPrice !== 0){
+      this.carSearchCriteria.price = [this.minPrice, this.maxPrice];
+    }
+    if (this.endDate.getTime() - this.startDate.getTime() !== 0){
+      this.carSearchCriteria.releaseDateTime = [this.endDate, this.startDate];
+    }
+
     this.carSearchCriteria = {
       brand: this.selectedBrand,
       specification: this.specification,
-      litre: [this.minLitre, this.maxLitre],
       used: this.used,
-      price: [this.minPrice, this.maxPrice],
-      releaseDateTime: [this.startDate, this.endDate]
     }
     this.searchService.setSortBy(this.sortBy);
     this.searchService.setSortDir(this.sortDir);
 
     this.searchService.setCriteria(this.carSearchCriteria);
+  }
+
+  logOut() {
+    this.authService.logOut();
+    window.location.reload();
   }
 }

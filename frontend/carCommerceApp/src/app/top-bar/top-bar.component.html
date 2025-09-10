@@ -11,27 +11,20 @@
         <div class="input-group">
           <input class="form-control" type="search" placeholder="Search by specifications..." aria-label="Search"
             [(ngModel)]="specification" name="specification" />
-            <mat-form-field appearance="outline" class="w-25 me-2">
-              <mat-label>Sort By</mat-label>
-              <mat-select [(ngModel)]="sortBy" name="sortBy">
-                <mat-option value="id">Id</mat-option>
-                <mat-option value="brand">Brand</mat-option>
-                <mat-option value="price">Price</mat-option>
-                <mat-option value="litre">Litre</mat-option>
-                <mat-option value="used">Condition</mat-option>
-                <mat-option value="releaseDateTime">Date</mat-option>
-                <mat-option value="specification">Specifications</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="w-25">
-              <mat-label>Direction</mat-label>
-              <mat-select [(ngModel)]="sortDir" name="sortOrder">
-                <mat-option value="ASC">Ascending</mat-option>
-                <mat-option value="DESC">Descending</mat-option>
-              </mat-select>
-            </mat-form-field>
-          <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
+              <select class="form-select" [(ngModel)]="sortBy" name="sortBy">
+                <option value="id">Id</option>
+                <option value="brand">Brand</option>
+                <option value="price">Price</option>
+                <option value="litre">Litre</option>
+                <option value="used">Condition</option>
+                <option value="releaseDateTime">Date</option>
+                <option value="specification">Specifications</option>
+              </select>
+              <select class="form-select" [(ngModel)]="sortDir" name="sortOrder">
+                <option value="ASC">Ascending</option>
+                <option value="DESC">Descending</option>
+              </select>
+          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
             <i class="fas fa-filter"></i> Filters
           </button>
           <button class="btn btn-primary" type="submit">Search</button>
@@ -111,7 +104,7 @@
           <a class="nav-link text-dark" href="#">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" [href]="loggedIn ? '/logout':'/login' ">{{loggedIn ? "Logout" : "Login"}}</a>
+          <a class="nav-link text-dark" (click)="logOut()" [href]="loggedIn ? '#':'/login'">{{loggedIn ? "Logout" : "Login"}}</a>
         </li>
       </ul>
     </div>
