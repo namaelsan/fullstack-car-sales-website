@@ -4,8 +4,8 @@ import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import { AuthService } from './auth.service';
 import { TokenInterceptor } from './token.interceptor';
+import { BasicAuthInterceptor } from './basic-auth.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -18,6 +18,10 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(MatNativeDateModule),
     {provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true
+    },
+    {provide: HTTP_INTERCEPTORS,
+      useClass: BasicAuthInterceptor,
       multi: true
     }
   ]

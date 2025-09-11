@@ -59,6 +59,10 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
+    public User getUserByName (String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public User addUserRole(Long userId, Long roleId) {
         User user = getUserById(userId);
         if (user == null) return null;

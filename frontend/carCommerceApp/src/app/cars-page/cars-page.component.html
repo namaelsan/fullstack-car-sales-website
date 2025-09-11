@@ -1,8 +1,9 @@
 <app-top-bar></app-top-bar>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <div class="center-column">
   <div class="title-wrapper">
-    <h1 class="page-title">Sales Page</h1>
+    <h1 class="page-title">Cars</h1>
   </div>
 
   <div class="info-box">
@@ -10,11 +11,17 @@
       <h4>Cart</h4>
     </strong>
     <h5>Total Products: {{totalCartElements()}} Adet</h5>
-    <h5>Total Price: {{totalCartPrice()}}</h5>
+    <h5>Toplam Price: {{totalCartPrice()}}</h5>
     <button type="button" (click)="clearCart()" class="btn btn-outline-danger mt-2">Clear cart</button>
   </div>
   <div class="container mt-4 p-4 bg-white shadow rounded">
-  
+    
+    <div class="d-flex justify-content-end mb-3">
+      <button type="button" (click)="addCar()" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Add New Car
+      </button>
+    </div>
+
     <div class="mb-3">
       <h5><strong>Cars</strong></h5>
       <h5 class="text-muted">{{ totalElements }} cars have been found.</h5>
@@ -45,11 +52,36 @@
           <div>
             <button type="button" (click)="openAddToCartDialog(car.id)" class="btn btn-outline-primary">Add to cart</button>
           </div>
+
+          <!-- Right-aligned buttons -->
+          <div>
+            <button mat-button (click)="openEditCarDialog(car)" class="btn btn-outline-warning me-2">
+              <i class="bi bi-pencil-square"></i>
+            </button>            
+            <button type="button" (click)="openDeleteCarDialog(car)" class="btn btn-outline-danger">
+              <i class="bi bi-trash-fill text-danger"></i>
+            </button>
+            
+          </div>
         </div>
       </div>
 
     </div> <!-- row -->
   </div>
+
+  <!-- INFOBOX -->
+  <div class="info-box">
+    <strong>
+      <h4>Cart</h4>
+    </strong>
+    <h5>Total Products: {{totalCartElements()}} Adet</h5>
+    <h5>Total Price: {{totalCartPrice()}}</h5>
+    <button type="button" (click)="clearCart()" class="btn btn-outline-danger mt-2">Clear cart</button>
+  </div>
+  <div class="container mt-4 p-4 bg-white shadow rounded">
+
+
+  <!-- BOTTOM NAVBAR -->
 
   <nav class="navbar fixed-bottom bg-light border-top">
     <div class="container justify-content-center">
@@ -69,4 +101,5 @@
       </ul>
     </div>
   </nav>
+
 </div>

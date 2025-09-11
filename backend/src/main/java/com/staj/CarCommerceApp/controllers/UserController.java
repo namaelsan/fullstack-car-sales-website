@@ -1,5 +1,6 @@
 package com.staj.CarCommerceApp.controllers;
 
+import com.staj.CarCommerceApp.entities.Role;
 import com.staj.CarCommerceApp.entities.User;
 import com.staj.CarCommerceApp.services.LoggingService;
 import com.staj.CarCommerceApp.services.UserService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -37,8 +39,10 @@ public class UserController {
             loggingService.logInfo("Credentials are incorrect");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        User userInfo = userService.getUserByName(user.getUsername());
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("token", JWTToken);
+        responseBody.put("id", String.valueOf(userInfo.getId()));
         return new ResponseEntity<Map<String,String>>(responseBody, HttpStatus.OK);
     }
 

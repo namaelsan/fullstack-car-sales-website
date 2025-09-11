@@ -13,9 +13,9 @@ import java.io.IOException;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String useBasicAuth = request.getHeader("X-Use-Basic-Auth");
+        String dontUseBasicAuth = request.getHeader("X-Dont-Use-Basic-Auth");
 
-        if( useBasicAuth == null ) {
+        if( dontUseBasicAuth != null ) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             response.setHeader("WWW-Authenticate", "Basic realm=\"Access to API\"");

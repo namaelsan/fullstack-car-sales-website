@@ -9,9 +9,13 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <form class="mx-auto w-75" (ngSubmit)="search()">
         <div class="input-group">
-          <input class="form-control" type="search" placeholder="Search by specifications..." aria-label="Search"
-            [(ngModel)]="specification" name="specification" />
-              <select class="form-select" [(ngModel)]="sortBy" name="sortBy">
+          
+          <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search by specifications..." aria-label="Search"
+              [(ngModel)]="specification" name="specification" />
+          
+            <div class="input-group-text p-0">
+              <select class="form-select form-select-sm" style="width: 120px;" [(ngModel)]="sortBy" name="sortBy">
                 <option value="id">Id</option>
                 <option value="brand">Brand</option>
                 <option value="price">Price</option>
@@ -20,14 +24,21 @@
                 <option value="releaseDateTime">Date</option>
                 <option value="specification">Specifications</option>
               </select>
-              <select class="form-select" [(ngModel)]="sortDir" name="sortOrder">
+            </div>
+          
+            <div class="input-group-text p-0">
+              <select class="form-select form-select-sm" style="width: 120px;" [(ngModel)]="sortDir" name="sortOrder">
                 <option value="ASC">Ascending</option>
                 <option value="DESC">Descending</option>
               </select>
-          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
-            <i class="fas fa-filter"></i> Filters
-          </button>
-          <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+          
+            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
+              <i class="fas fa-filter"></i> Filters
+            </button>
+            <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+          
         </div>
 
         <div class="collapse" id="advancedSearch">
@@ -94,12 +105,21 @@
         </div>
       </form>
       <ul class="navbar-nav me-3">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link text-dark" href="#">Home</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-dark" href="">Listings</a>
         </li>
+        <li class="nav-item dropdown" [ngClass]="'hover-dropdown'">
+          <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
+            Admin
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/admin/cars">Cars</a></li>
+            <li><a class="dropdown-item" href="/admin/brands">Brands</a></li>
+          </ul>
+        </li>        
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Contact</a>
         </li>

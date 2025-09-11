@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './user.models';
+import { Role, User } from './user.models';
 import { JWTToken } from './jwttoken.models';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,32 +11,30 @@ import { Router } from '@angular/router';
 export class AuthService {
   private baseUrl = '/api'
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
   login(user: User) {
     return this.http.post<JWTToken>(`${this.baseUrl}/login`, user).subscribe({
-        next: (data) => {
+      next: (data) => {
           localStorage.setItem('JWT_TOKEN', data.token)
+          this.getUserDataFromDB(data.id);
           this.router.navigate(['']);
-        },
-        error: (e) => {
-          console.error("Error logging in: ", e)
-        }
+      },
+      error: (e) => {
+        console.error("Error logging in: ", e)
+      }
     });
   }
 
   register(user: User) {
     return this.http.post<User>(`${this.baseUrl}/register`, user).subscribe({
-        next: (user) => {
-          localStorage.setItem('username', user.username!)
-          localStorage.setItem('user_roles', JSON.stringify(user.roles))
-          localStorage.setItem('user_id', user.id!.toString())
-          this.router.navigate(['login']);
+      next: (user) => {
+        this.router.navigate(['login']);
 
-        },
-        error: (e) => {
-          console.error("Error registering user: ", e)
-        }
+      },
+      error: (e) => {
+        console.error("Error registering user: ", e)
+      }
     });
   }
 
@@ -49,22 +48,40 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('JWT_TOKEN');
+    localStorage.removeItem('username');
+    localStorage.removeItem('user_roles');
     this.router.navigate(['']);
   }
 
   getUsername(): String {
-    let name = localStorage.getItem('user_roles');
-    return name ? name:"";
+    let name = localStorage.getItem('username');
+    return name ? name : "";
   }
 
-  getUserRoles(): String[] {
+  getUserRoles(): Role[] {
     let rolesString = localStorage.getItem('user_roles');
-    let roles: String[] = JSON.parse(rolesString? rolesString: '');
+    let roles: Role[] = JSON.parse(rolesString ? rolesString : '');
     return roles;
   }
 
   getUserId(): number {
     return Number(localStorage.getItem('user_roles'));
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRoles().some(role => role.roleName === "ADMIN");
+  }
+
+  getUserDataFromDB(id: number) {
+    return this.userService.getUserById(id).subscribe({
+      next: (user) => {
+        localStorage.setItem('username', user.username!);
+        localStorage.setItem('user_roles', JSON.stringify(user.roles));
+      },
+      error: (e) => {
+        console.error("Error registering user: ", e)
+      }
+    })
   }
 
 }
