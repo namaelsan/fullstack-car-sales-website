@@ -34,7 +34,6 @@ public class MyUserDetailService implements UserDetailsService {
     }
 
     private Set<GrantedAuthority> getAuthorities(Set<Role> roles) {
-        System.out.println("USERROLE BEING SET RN"+ roles.stream().map(Role::getRoleName));
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
                 .collect(Collectors.toSet());

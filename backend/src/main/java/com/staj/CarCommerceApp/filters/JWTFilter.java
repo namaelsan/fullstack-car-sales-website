@@ -1,11 +1,13 @@
 package com.staj.CarCommerceApp.filters;
 
 import com.staj.CarCommerceApp.services.JWTService;
+import com.staj.CarCommerceApp.services.LoggingService;
 import com.staj.CarCommerceApp.services.MyUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -20,18 +22,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
-    @Autowired
-    JWTService jwtService;
-
-    @Autowired
-    ApplicationContext applicationContext;
+    private final JWTService jwtService;
+    private final LoggingService loggingService;
+    private final ApplicationContext applicationContext;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println("doFilterInternal");
+        loggingService.logInfo("Using JWTFilter");
 
         String authorizationHeader = request.getHeader("Authorization");
         String token = null;
@@ -55,7 +56,7 @@ public class JWTFilter extends OncePerRequestFilter {
             if (jwtService.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken newToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                System.out.println("Authorities: " + userDetails.getAuthorities());
+                loggingService.logInfo("Authorities: " + userDetails.getAuthorities());
                 newToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(newToken); // add the new token to the chain for UsernamePasswordAuthenticationFilter to use
             }

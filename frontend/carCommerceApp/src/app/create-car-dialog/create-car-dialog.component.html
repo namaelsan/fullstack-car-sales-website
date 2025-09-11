@@ -1,0 +1,53 @@
+<div class="mb-3 mt-3 ms-3 me-3" style="width: 400px;">
+    <div class="modal-header">
+        <h5 class="modal-title" id="updatePollLabel">Edit Car</h5>
+        <button type="button" class="btn-close" mat-dialog-close="onClose()" aria-label="Close"></button>
+    </div>
+    <mat-dialog-content>
+        <div class="mb-3">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Brand</mat-label>
+                <mat-select [(ngModel)]="car.brand.id" name="brand">
+                  <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                    {{ brand.bname }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="mb-3">
+            <label>Litre</label>
+            <input type="text" class="form-control" [(ngModel)]="car.litre" name="brand" id="carBrandDialog">
+        </div>
+        <div class="mb-3">
+            <label>Price</label>
+            <input type="text" class="form-control" [(ngModel)]="car.price" name="brand" id="carBrandDialog">
+        </div>
+        <div class="mb-3">
+            <label>Used</label>
+            <mat-radio-group [(ngModel)]="car.used">
+                <mat-radio-button color="primary" [value]="true" [checked]="car.used === true">True</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false"
+                    [checked]="car.used === false">False</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="mb-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="car.releaseDateTime">
+                <mat-hint>MM/DD/YY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              
+              
+        </div>
+        <div class="mb-3">
+            <label>Specification</label>
+            <input type="text" class="form-control" [(ngModel)]="car.specification" name="brand" id="carBrandDialog">
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button class="btn btn-secondary me-2" mat-dialog-close="">Close</button>
+        <button mat-button class="btn btn-primary" (click)="onSave()">Save</button>
+    </mat-dialog-actions>
+</div>

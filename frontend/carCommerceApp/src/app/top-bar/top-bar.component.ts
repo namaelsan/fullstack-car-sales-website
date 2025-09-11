@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { SearchService } from '../search-service.service';
+import { SearchService } from '../search.service';
 import { AuthService } from '../auth.service';
 import { CarDataService } from '../car-data-service.service';
 import { Page } from '../page.models';

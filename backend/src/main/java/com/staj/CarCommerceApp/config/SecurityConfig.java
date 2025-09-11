@@ -1,8 +1,10 @@
 package com.staj.CarCommerceApp.config;
 
+import com.staj.CarCommerceApp.entryPoint.CustomAuthenticationEntryPoint;
 import com.staj.CarCommerceApp.filters.JWTFilter;
 import com.staj.CarCommerceApp.repositories.UserRepository;
 import com.staj.CarCommerceApp.services.MyUserDetailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +22,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    private MyUserDetailService userDetailsService;
-
-    @Autowired
-    private JWTFilter jwtFilter;
+    private final MyUserDetailService userDetailsService;
+    private final JWTFilter jwtFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +42,7 @@ public class SecurityConfig {
                     .anyRequest().authenticated()
             )
 //            .formLogin(Customizer.withDefaults())
-            .httpBasic(Customizer.withDefaults())
+            .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(customAuthenticationEntryPoint))
             .sessionManagement(session ->
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

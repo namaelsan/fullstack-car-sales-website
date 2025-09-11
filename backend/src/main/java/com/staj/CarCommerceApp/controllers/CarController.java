@@ -71,7 +71,6 @@ public class CarController {
             loggingService.logInfo("Page is empty");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        System.out.println(cars);
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 }

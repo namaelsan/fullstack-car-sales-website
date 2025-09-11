@@ -9,7 +9,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        loadComponent: () => import('./listing-page/listing-page.component').then(m => m.ListingPageComponent),
+        loadComponent: () => import('./main-page/main-page.component').then(m => m.MainPageComponent),
         title: "List"
     },
 ];
