@@ -44,10 +44,6 @@ public class BrandService {
         brandRepository.deleteById(id);
     }
 
-    public Brand getBrandById(Long id) {
-        return brandRepository.findById(id).orElse(null);
-    }
-
     public List<Brand> getAllBrands() {
         return brandRepository.findAll();
     }

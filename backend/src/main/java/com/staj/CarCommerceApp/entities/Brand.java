@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @Entity(name = "T_Brand")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Brand {
 

@@ -23,7 +23,7 @@ public class BrandController {
 
     @GetMapping("/find-by-id")
     public ResponseEntity<Brand> getBrandById(@RequestParam("id") String id ) {
-        Brand brand = brandService.getBrandById(Long.parseLong(id));
+        Brand brand = brandService.findBrandById(Long.parseLong(id));
         if (brand != null) {
             return new ResponseEntity<>(brand, HttpStatus.OK);
         }

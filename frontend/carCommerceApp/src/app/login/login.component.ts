@@ -4,6 +4,7 @@ import { User } from '../user.models';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { TopBarComponent } from "../top-bar/top-bar.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
     username: ""
   };
 
-  constructor (private authService: AuthService) {}
+  constructor (private authService: AuthService, private router: Router) {}
   
   submitForm() {
     this.authService.login(this.user);

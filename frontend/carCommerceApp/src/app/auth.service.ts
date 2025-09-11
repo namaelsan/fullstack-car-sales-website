@@ -19,7 +19,7 @@ export class AuthService {
           this.router.navigate(['']);
         },
         error: (e) => {
-          console.error("Error updating car", e)
+          console.error("Error logging in: ", e)
         }
     });
   }
@@ -30,9 +30,11 @@ export class AuthService {
           localStorage.setItem('username', user.username!)
           localStorage.setItem('user_roles', JSON.stringify(user.roles))
           localStorage.setItem('user_id', user.id!.toString())
+          this.router.navigate(['login']);
+
         },
         error: (e) => {
-          console.error("Error updating car", e)
+          console.error("Error registering user: ", e)
         }
     });
   }
