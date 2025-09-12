@@ -65,3 +65,5 @@ node_modules
 
 ## LOGGING ##
 *.log
+postman/CarCommerceAppCollection.postman_collection.json
+sql/db_export.sql

@@ -9,8 +9,9 @@ export interface Car {
 }
 
 export interface Brand {
-    id: number;
+    id?: number;
     bname: string;
+    cars?: Car[];
 }
 
 export interface Image {

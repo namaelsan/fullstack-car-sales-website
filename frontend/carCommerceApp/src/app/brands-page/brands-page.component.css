@@ -1,0 +1,21 @@
+  .title-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Başlık yüksekliği */
+    margin-top: 20px; /* Sayfanın üstünden boşluk */
+  }
+  
+  .page-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .center-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Dikeyde ortalama */
+    align-items: center;      /* Yatayda ortalama */
+    padding: 5vh;
+}  

@@ -9,11 +9,11 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <form class="mx-auto w-75" (ngSubmit)="search()">
         <div class="input-group">
-          
+
           <div class="input-group">
             <input class="form-control" type="search" placeholder="Search by specifications..." aria-label="Search"
               [(ngModel)]="specification" name="specification" />
-          
+
             <div class="input-group-text p-0">
               <select class="form-select form-select-sm" style="width: 120px;" [(ngModel)]="sortBy" name="sortBy">
                 <option value="id">Id</option>
@@ -25,81 +25,83 @@
                 <option value="specification">Specifications</option>
               </select>
             </div>
-          
+
             <div class="input-group-text p-0">
               <select class="form-select form-select-sm" style="width: 120px;" [(ngModel)]="sortDir" name="sortOrder">
                 <option value="ASC">Ascending</option>
                 <option value="DESC">Descending</option>
               </select>
             </div>
-          
-            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearch">
+
+            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+              data-bs-target="#advancedSearch">
               <i class="fas fa-filter"></i> Filters
             </button>
             <button class="btn btn-primary" type="submit">Search</button>
           </div>
-          
+
         </div>
 
         <div class="collapse" id="advancedSearch">
           <div class="card card-body mt-2">
             <div class="row g-3">
-              <div class="col-sm-6">
-                <mat-form-field class="w-100" appearance="outline">
-                  <mat-label>Brand</mat-label>
-                  <mat-select [(ngModel)]="selectedBrand" name="brand">
-                    <mat-option *ngFor="let brand of brands" [value]="brand.bname">
-                      {{ brand.bname }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
 
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center">
-                  <mat-form-field class="me-2" appearance="outline">
-                    <mat-label>Min Price</mat-label>
-                    <input matInput type="number" [(ngModel)]="minPrice" name="minPrice">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Max Price</mat-label>
-                    <input matInput type="number" [(ngModel)]="maxPrice" name="maxPrice">
+                <div class="col-sm-6">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Brand</mat-label>
+                    <mat-select [(ngModel)]="selectedBrand" name="brand">
+                      <mat-option *ngFor="let brand of brands" [value]="brand.bname">
+                        {{ brand.bname }}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
-              </div>
 
-              <div class="col-sm-6">
-                <div class="d-flex align-items-center">
-                  <mat-form-field class="me-2" appearance="outline">
-                    <mat-label>Min Litre</mat-label>
-                    <input matInput type="number" [(ngModel)]="minLitre" name="minLitre">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Max Litre</mat-label>
-                    <input matInput type="number" [(ngModel)]="maxLitre" name="maxLitre">
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center">
+                    <mat-form-field class="me-2" appearance="outline">
+                      <mat-label>Min Price</mat-label>
+                      <input matInput type="number" [(ngModel)]="minPrice" name="minPrice">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Max Price</mat-label>
+                      <input matInput type="number" [(ngModel)]="maxPrice" name="maxPrice">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center">
+                    <mat-form-field class="me-2" appearance="outline">
+                      <mat-label>Min Litre</mat-label>
+                      <input matInput type="number" [(ngModel)]="minLitre" name="minLitre">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Max Litre</mat-label>
+                      <input matInput type="number" [(ngModel)]="maxLitre" name="maxLitre">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <mat-radio-group [(ngModel)]="used" name="condition" class="d-flex flex-column" color="primary">
+                    <mat-label class="mb-2">Condition</mat-label>
+                    <mat-radio-button [value]="false" class="me-3">New</mat-radio-button>
+                    <mat-radio-button [value]="true">Used</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <div class="col-md-6">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate [(ngModel)]="startDate" name="startDate">
+                      <input matEndDate [(ngModel)]="endDate" name="endDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
                   </mat-form-field>
                 </div>
-              </div>
-
-              <div class="col-sm-6">
-                <mat-radio-group [(ngModel)]="used" name="condition" class="d-flex flex-column" color="primary">
-                  <mat-label class="mb-2">Condition</mat-label>
-                  <mat-radio-button [value]="false" class="me-3">New</mat-radio-button>
-                  <mat-radio-button [value]="true">Used</mat-radio-button>
-                </mat-radio-group>
-              </div>
-
-              <div class="col-md-6">
-                <mat-form-field class="w-100" appearance="outline">
-                  <mat-label>Enter a date range</mat-label>
-                  <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate [(ngModel)]="startDate" name="startDate">
-                    <input matEndDate [(ngModel)]="endDate" name="endDate">
-                  </mat-date-range-input>
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-date-range-picker #picker></mat-date-range-picker>
-                </mat-form-field>
-              </div>
             </div>
           </div>
         </div>
@@ -119,12 +121,13 @@
             <li><a class="dropdown-item" href="/admin/cars">Cars</a></li>
             <li><a class="dropdown-item" href="/admin/brands">Brands</a></li>
           </ul>
-        </li>        
+        </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" (click)="logOut()" [href]="loggedIn ? '#':'/login'">{{loggedIn ? "Logout" : "Login"}}</a>
+          <a class="nav-link text-dark" (click)="logOut()" [href]="loggedIn ? '#':'/login'">{{loggedIn ? "Logout" :
+            "Login"}}</a>
         </li>
       </ul>
     </div>

@@ -28,6 +28,7 @@ import { SortDirection } from '../search-request.models';
 })
 export class TopBarComponent implements OnInit {
 
+  searchType: string = "car";
   maxPrice: number = 0;
   minPrice: number = 0;
   brands: Brand[] = [];
@@ -46,24 +47,7 @@ export class TopBarComponent implements OnInit {
 
   constructor(private brandService: BrandService, private searchService: SearchService, private authService: AuthService, private carDataService: CarDataService) { }
 
-  // public searchModel: SearchModel<CarSearchCriteria> = {
-  //   searchRequest: {
-  //     pageSize: 10,
-  //     pageIndex: 0,
-  //     sortDir: "ASC",
-  //     sortName: "id"
-  //   },
-  //   model: {
-  //     // brand: "",
-  //     // specification: "",
-  //     // litre: [0,1000],
-  //     // used: true,
-  //     // price: [0,1000],
-  //     // releaseDateTime: [new Date('2024-09-08T12:35:12.920+00:00'),new Date('2026-09-08T12:35:12.920+00:00')]
-  //   }
-  // }
-
-  search() {
+   search() {
     this.submitVariables();
     this.searchService.searchCars().subscribe((carPage: Page<Car>) => {
       if (carPage === null) {

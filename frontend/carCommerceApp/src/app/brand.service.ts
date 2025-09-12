@@ -21,10 +21,10 @@ export class BrandService {
   }
 
   updateBrand(brand: Brand): Observable<Brand> {
-    return this.http.patch<Brand>(this.baseUrl +"/"+ brand.id, brand)
+    return this.http.patch<Brand>(`${this.baseUrl}/${brand.id}`, brand)
   }
 
-  deleteBrand(id: number): void{
-    this.http.delete(this.baseUrl +"/"+ id);
+  deleteBrand(id: number): Observable<Object> {
+    return this.http.delete(this.baseUrl + "/" + id);
   }
 }

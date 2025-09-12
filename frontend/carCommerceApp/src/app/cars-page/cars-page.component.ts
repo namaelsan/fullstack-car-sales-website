@@ -32,19 +32,6 @@ export class CarsPageComponent {
   freshPage: boolean = true;
 
 
-  totalCartPrice(): number {
-    return this.cartService.getTotalPrice();
-  }
-
-  totalCartElements(): number {
-    return this.cartService.getTotalElements();
-  }
-
-  clearCart() {
-    this.cartService.clearCart();
-  }
-
-
   openEditCarDialog(car: Car) {
     let dialogRef = this.dialog.open(EditCarDialogComponent, { data: car });
     dialogRef.afterClosed().subscribe(result => {
@@ -132,7 +119,7 @@ export class CarsPageComponent {
     this.currentPage = savedPage ? +savedPage : 1;
   }
 
-  addCar() {
+  openCreateCarDialog() {
     let dialogRef = this.dialog.open(CreateCarDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -151,4 +138,5 @@ export class CarsPageComponent {
   formatDate(date: Date) {
     return moment(date).format('MMMM Do YYYY, h:mm:ss a');
   }
+  
 }
