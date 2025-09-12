@@ -31,4 +31,8 @@ export class CarService {
   getPageOfCarsWithFilter(carRequest: SearchModel<CarSearchCriteria>): Observable<Page<Car>> {
     return this.http.put<Page<Car>>(`${this.baseUrl}/`, carRequest);
   }
+
+  getCarById(id: number): Observable<Car> {
+    return this.http.get<Car>(`${this.baseUrl}/?id=${id}`);
+  }
 }

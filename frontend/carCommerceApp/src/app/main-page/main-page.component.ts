@@ -8,13 +8,14 @@ import { CartService } from '../cart.service';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
 import { SearchService } from '../search.service';
 import { TopBarComponent } from "../top-bar/top-bar.component";
-import { CarDataService } from '../car-data-service.service';
+import { CarDataService } from '../car-data.service';
 import * as moment from 'moment';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-listing-page',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, TopBarComponent],
+  imports: [CommonModule, MatDialogModule, TopBarComponent, RouterLink],
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
@@ -26,7 +27,6 @@ export class MainPageComponent {
   currentPage: number = 1;
   totalPages: number = 0;
   totalElements: number = 0;
-  freshPage: boolean = true;
 
 
   totalCartPrice(): number {

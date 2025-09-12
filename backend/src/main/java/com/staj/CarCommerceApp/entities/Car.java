@@ -40,7 +40,4 @@ public class Car {
     @Column(name="release_datetime", nullable=false)
     private Timestamp releaseDateTime;
 //    sql timestamp
-
-    @Column(name="price", nullable=false)
-    private BigDecimal price;
 }

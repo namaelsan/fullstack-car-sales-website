@@ -5,7 +5,7 @@ import { CarService } from '../car.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CartService } from '../cart.service';
 import { SearchService } from '../search.service';
-import { CarDataService } from '../car-data-service.service';
+import { CarDataService } from '../car-data.service';
 import { EditCarDialogComponent } from '../edit-car-dialog/edit-car-dialog.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Car } from './car.models';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CarDataService } from './car-data-service.service';
+import { CarDataService } from './car-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,9 @@ export class CartService {
       let updatedCart = this.cartSubject.getValue();
       let index = updatedCart.findIndex(i => i === id);
       if (index == -1) {
-        console.error("Car couldnt be found in cart")
+        // console.error("Car couldnt be found in cart")
+        throw("Car couldnt be found in cart");
+        
       }
       updatedCart.splice(index,1);
 

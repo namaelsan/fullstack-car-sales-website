@@ -1,0 +1,68 @@
+<app-top-bar></app-top-bar>
+
+<div class="center-column">
+    <div class="title-wrapper">
+        <h1 class="page-title">Cart</h1>
+    </div>
+
+    <div class="info-box">
+        <strong>
+            <h4>Cart</h4>
+        </strong>
+        <h5>Total Products: {{totalCartElements()}}</h5>
+        <h5>Total Price: {{totalCartPrice()}}</h5>
+    </div>
+    <div class="container mt-4 mb-4 p-4 bg-white shadow rounded">
+
+        <div class="d-flex justify-content-end mb-3">
+            <button type="button" (click)="clearCart()" class="btn btn-danger">
+                <i class="bi bi-trash-fill"></i> Clear Cart
+            </button>
+        </div>
+
+
+        <div class="mb-3">
+            <h5><strong>Cars</strong></h5>
+            <h5 class="text-muted">{{ totalCartElements() }} cars have been found.</h5>
+            <h5 class="text-muted">Checkout price is {{totalCartPrice()}}₺</h5>
+        </div>
+
+        <div *ngFor="let car of cars" class="row border p-3 rounded mb-3 align-items-center">
+            <!-- Image Column -->
+            <div class="col-md-3 text-center">
+                <img src="https://i0.shbdn.com/photos/49/96/35/x5_1248499635gat.jpg" [alt]="car.brand"
+                    class="img-fluid rounded">
+            </div>
+
+            <!-- Info Column -->
+            <div class="col-md-9">
+                <h4 class="mb-2">{{ car.brand.bname }}</h4>
+                <div class="row">
+                    <div class="col-sm-6"><strong>Release Date:</strong> {{ formatDate(car.releaseDateTime) }}</div>
+                    <div class="col-sm-6"><strong>Brand:</strong> {{ car.brand.bname }}</div>
+                    <div class="col-sm-6"><strong>Litre:</strong> {{ car.litre }}L</div>
+                    <div class="col-sm-6"><strong>Price:</strong> {{ car.price| number }}₺</div>
+                    <div class="col-sm-6"><strong>Used:</strong> {{ car.used }}</div>
+                    <div class="col ">{{ car.specification }}</div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <!-- Left-aligned button -->
+                    <div>
+                        <!-- <button type="button" (click)="openAddToCartDialog(car.id)" class="btn btn-outline-primary">Add to cart</button> -->
+                    </div>
+
+                    <!-- Right-aligned buttons -->
+                    <div>
+                        <button type="button" (click)="openDeleteCartDialog(car)" class="btn btn-outline-danger">
+                            <i class="bi bi-trash-fill text-danger"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- row -->
+    </div>
+</div>

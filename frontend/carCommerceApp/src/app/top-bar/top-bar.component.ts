@@ -15,7 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SearchService } from '../search.service';
 import { AuthService } from '../auth.service';
-import { CarDataService } from '../car-data-service.service';
+import { CarDataService } from '../car-data.service';
 import { Page } from '../page.models';
 import { SortDirection } from '../search-request.models';
 

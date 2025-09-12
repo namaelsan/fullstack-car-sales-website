@@ -19,6 +19,11 @@ export const routes: Routes = [
         title: "Register"
     },
     {
+        path: 'cart',
+        loadComponent: () => import('./cart-page/cart-page.component').then(m => m.CartPageComponent),
+        title: "Cart",
+    },
+    {
         path: 'admin/cars',
         loadComponent: () => import('./cars-page/cars-page.component').then(m => m.CarsPageComponent),
         title: "Edit",

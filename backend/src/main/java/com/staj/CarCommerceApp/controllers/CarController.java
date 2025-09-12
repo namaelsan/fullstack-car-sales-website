@@ -21,7 +21,7 @@ public class CarController {
     private final CarService carService;
     private final LoggingService loggingService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/")
     public ResponseEntity<Car> getCarById(@RequestParam Long id) {
         Car car = carService.getCarById(id);
         if (car == null) {
